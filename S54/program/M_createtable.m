@@ -19,3 +19,13 @@ var_type([1,6]) = {'date','varchar(20)'};
 key_var = 'tradeDate';
 [OK1,OK2,OK3] = create_table_adair(dN,tn,var_info,var_type,key_var);
 
+dN = 'S54';
+tn = 'A41data';
+var_info = {'ticker','tradeDate','openPrice','highPrice','lowPrice','closePrice'};
+var_type = cell(size(var_info));
+var_type(:) = {'float'};
+var_type([1,2]) = {'varchar(12)','date'};
+key_var = 'ticker,tradeDate';
+[OK1,OK2,OK3] = create_table_adair(dN,tn,var_info,var_type,key_var);
+
+

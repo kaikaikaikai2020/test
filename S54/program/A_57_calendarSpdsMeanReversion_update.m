@@ -5,7 +5,7 @@ addpath(genpath(fullfile(pwd,'jplv7')))
 % load('inputDataDaily_VX_20120507', 'tday', 'contracts', 'cl');
 %load('inputDataDaily_CL_20120813', 'tday', 'contracts', 'cl');
 ticker_pool = {'CL','TU','HG','PA'};
-for ticker_ID = 4%1:length(ticker_pool)
+for ticker_ID = 1:length(ticker_pool)
     %ticker = 'TU';
     ticker = ticker_pool{ticker_ID};
     sql_str = ['select year(tradeDate)*10000+month(tradeDate)*100+day(tradeDate) as t, ',...

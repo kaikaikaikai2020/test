@@ -6,7 +6,7 @@ addpath(genpath(fullfile(pwd,'jplv7')))
 %'../Data/inputDataOHLCDaily_20120424'
 %load('inputDataOHLCDaily_stocks_20120424','stocks');
 index_pool = {'000300','000905','000001'};
-fee = 3/1000;
+fee = 1e-3;
 for index_id = 1:3
     index_sel = index_pool{index_id};
     stocks = yq_methods.get_index_pool(index_sel,'2005-01-01');

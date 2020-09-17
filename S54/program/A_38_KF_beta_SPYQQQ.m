@@ -23,7 +23,7 @@ y = cell2mat(y(ib,2));
 x=[x ones(size(x))];
 
 %delta=0.0001; % delta=1 gives fastest change in beta, delta=0.000....1 allows no change (like traditional linear regression).
-delta = 1e-5;
+delta = 1e-7;
 
 yhat=NaN(size(y)); % measurement prediction
 e=NaN(size(y)); % measurement prediction error

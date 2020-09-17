@@ -1,9 +1,9 @@
 %bollinger.m
 clear;
 addpath(genpath(fullfile(pwd,'jplv7')))
-tref = [];
 % 1 minute data on GLD-USO
 %{
+tref = [];
 load('inputData_ETF', 'tday', 'syms', 'cl');
 idxG=find(strcmp('GLD', syms));
 idxU=find(strcmp('USO', syms));
@@ -82,9 +82,6 @@ else
     figure;
     plot(cumprod(1+ret)-1); % Cumulative compounded return
 end
-
-
-
 fprintf(1, 'APR=%f Sharpe=%f\n', prod(1+ret).^(252/length(ret))-1, sqrt(252)*mean(ret)/std(ret));
 % APR=0.178249 Sharpe=0.964673
 

@@ -4,10 +4,11 @@ clear;
 key_str = 'A-44';
 addpath(genpath(fullfile(pwd,'jplv7')))
 %'../Data/inputDataOHLCDaily_20120424'
-load('inputDataOHLCDaily_stocks_20120424','stocks');
+%load('inputDataOHLCDaily_stocks_20120424','stocks');
 %stks=load('inputDataOHLCDaily_stocks_20120424');
 %stks.tref = [];
-stks = get_pool_data_update(stocks);
+stks = get_A41data();
+%stks = get_pool_data_update(stocks);
 tday = stks.tday;
 cl=stks.cl;
 op=stks.op;

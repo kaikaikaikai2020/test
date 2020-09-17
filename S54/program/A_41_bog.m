@@ -16,15 +16,20 @@ sql_str = ['select tradeDate,openPrice as op,highPrice as hi,lowPrice as lo,',..
     'closePrice as cl from polygon.usastock_day where ticker in (%s) and tradeDate>="2006-05-11" order by tradeDate'];
 x=fetchmysql(sprintf(sql_str,ticker_pool),3);
 %}
+load tempdata
 
 sql_str = ['select tradeDate,openPrice as op,highPrice as hi,lowPrice as lo,',...
     'closePrice as cl from polygon.usastock_day where ticker="%s"and tradeDate>="2006-05-11" order by tradeDate'];
 T = length(stocks);
+
+%{
 X = cell(T,1);
 parfor i = 1:length(stocks)
     X{i} = fetchmysql(sprintf(sql_str,stocks{i}),2);
     sprintf('%s loading data %d-%d',key_str,i,T)
 end
+%}
+load tempdata X
 tref = cellfun(@(x) x(:,1)',X,'UniformOutput',false);
 tref = unique([tref{:}]);
 tday = cellfun(@(x) str2double(strjoin(strsplit(x,'-'))),tref);

@@ -10,7 +10,7 @@ t0 = '2007-01-01';
 
 sql_str = ['select tradeDate,openPrice,HighestPrice,lowestPrice,closePrice ',...
     'from yuqerdata.MktFunddGet where ticker="%s" and tradeDate >="%s" order by tradeDate'];
-for index_ID = 2%1:2
+for index_ID = 1%1:2
     etf_sel = etf_pool{index_ID};    
     etf0 = fetchmysql(sprintf(sql_str,etf_sel,t0),2);
     etf = [];
