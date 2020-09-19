@@ -18,7 +18,7 @@ import time
 import datetime
 import numpy as np 
 num_core = min(multiprocessing.cpu_count()*10,10)
-client = uqer.Client(token='34e1248d676e3552680ef30cef925928c5147dba193bcb54ef70ddc4bd67daaa')
+client = uqer.Client(token='8b1df403d1bfb39b588d35a43e8526f454d779351d0b439b9ad7b299cd61d9df')
 datadir='dataset_uqer'
 if not os.path.exists(datadir):
     os.makedirs(datadir)
