@@ -60,7 +60,7 @@ z_check = False
 tt = time.strftime("%Y%m%d", time.localtime())
 
 #must be set before using
-with open('para.json','r',encoding='utf-8') as f:
+with open('para_server.json','r',encoding='utf-8') as f:
     para = json.load(f)
     
 pn = para['yuqerdata_dir']
@@ -68,46 +68,13 @@ pn = para['yuqerdata_dir']
 user_name = para['mysql_para']['user_name']
 pass_wd = para['mysql_para']['pass_wd']
 port = para['mysql_para']['port']
-
-db_name1 = 'yuqerdata'
+host = para['mysql_para']['host']
+db_name1 = 'd1analytics_dev'
 #eng_str='mysql+pymysql://%s:%s@localhost:%d/%s?charset=utf8' % (user_name,pass_wd,port,db_name)
-eng_str='mysql+pymysql://%s:%s@localhost:%d/%s?charset=utf8' % (user_name,pass_wd,port,db_name1)
+eng_str='mysql+pymysql://%s:%s@%s:%d/%s?charset=utf8' % (user_name,pass_wd,host,port,db_name1)
 engine = create_engine(eng_str)
 
-db_name3 = 'S26'
-eng_str='mysql+pymysql://%s:%s@localhost:%d/%s?charset=utf8' % (user_name,pass_wd,port,db_name3)
-engineS26 = create_engine(eng_str)
 
-db_name_gta_web = 'gta_web'
-eng_str='mysql+mysqlconnector://%s:%s@localhost:%d/%s?charset=utf8' % (user_name,pass_wd,port,db_name_gta_web)
-engine_gtaweb = create_engine(eng_str)
-#engine = create_engine('mysql+pymysql://root:liudehua@localhost:3306/yuqerdata?charset=utf8')
-#engineS26 = create_engine('mysql+pymysql://root:liudehua@localhost:3306/S26?charset=utf8')
-db_name_yq_datacub1 = 'yuqer_cubdata'
-eng_str='mysql+pymysql://%s:%s@localhost:%d/%s?charset=utf8' % (user_name,pass_wd,port,db_name_yq_datacub1)
-engine_yq_datacub1 = create_engine(eng_str)
-
-db_name_S19factors = 'factors_com'
-eng_str='mysql+pymysql://%s:%s@localhost:%d/%s?charset=utf8' % (user_name,pass_wd,port,db_name_S19factors)
-engine_yq_S19factors = create_engine(eng_str)
-
-db_name_tdx = 'pytdx_data'
-#eng_str='mysql+pymysql://%s:%s@localhost:%d/%s?charset=utf8' % (user_name,pass_wd,port,db_name)
-eng_str='mysql+pymysql://%s:%s@localhost:%d/%s?charset=utf8' % (user_name,pass_wd,port,db_name_tdx)
-engine_tdx = create_engine(eng_str)
-
-db_name_akshare = 'aksharedata'
-#eng_str='mysql+pymysql://%s:%s@localhost:%d/%s?charset=utf8' % (user_name,pass_wd,port,db_name)
-eng_str='mysql+pymysql://%s:%s@localhost:%d/%s?charset=utf8' % (user_name,pass_wd,port,db_name_akshare)
-engine_akshare = create_engine(eng_str)
-
-eng_str='mysql+pymysql://%s:%s@localhost:%d/futuredata?charset=utf8' % (user_name,pass_wd,port)
-engine_futuredata = create_engine(eng_str)
-
-db_nameS50 = 'S50'
-#eng_str='mysql+pymysql://%s:%s@localhost:%d/%s?charset=utf8' % (user_name,pass_wd,port,db_name)
-eng_str='mysql+pymysql://%s:%s@localhost:%d/%s?charset=utf8' % (user_name,pass_wd,port,db_nameS50)
-engineS50 = create_engine(eng_str)
 
 
 def get_file_name(file_dir,file_type):
