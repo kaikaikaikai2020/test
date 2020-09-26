@@ -111,7 +111,7 @@ def read_yuqer_datacube_data(fn):
 
 def create_table(db_name,tn_name,var_name,var_type,key_str):
     #连接本地数据库
-    db = pymysql.connect("localhost",user_name,pass_wd,db_name)
+    db = pymysql.connect(host,user_name,pass_wd,db_name)
     #创建游标
     cursor = db.cursor()
     #创建
@@ -137,7 +137,7 @@ def create_table(db_name,tn_name,var_name,var_type,key_str):
         db.close()
         
 def do_sql_order(order_str,db_name):
-    db = pymysql.connect("localhost",user_name,pass_wd,db_name)
+    db = pymysql.connect(host,user_name,pass_wd,db_name)
     #创建游标
     cursor = db.cursor()
     try:
