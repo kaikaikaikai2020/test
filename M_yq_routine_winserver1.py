@@ -153,7 +153,7 @@ def do_sql_order(order_str,db_name):
         db.close()
 
 def get_tradingdate(t1,t2):
-    sql_str = '''select tradeDate from yuqerdata.yq_index
+    sql_str = '''select tradeDate from yq_index
                 where tradeDate >= '%s' and tradeDate<='%s' 
                 and symbol = '000001' order by tradeDate '''
     sql_str = sql_str % (t1,t2)
@@ -617,7 +617,7 @@ if len(fns_data[data_id])>0:
     x = x[['ticker','exchangeCD','ListSectorCD','ListSector','secShortName',
            'listStatusCD','listDate','delistDate','equTypeCD','equType','partyID',
            'totalShares','nonrestFloatShares','nonrestfloatA','endDate','TShEquity']]
-    do_sql_order('truncate table %s' % (tn),'yuqerdata')
+    do_sql_order('truncate table %s' % (tn),db_name1)
     x.to_sql(tn,engine,if_exists='append',index=False,chunksize=3000)
     print('股票基本数据已更新')
     os.remove(fns_data[data_id])
@@ -680,7 +680,7 @@ if len(fns_data[data_id])>0:
     tt_str = '1990-01-01'
     x2 = x
     if not x2.empty:
-        do_sql_order('truncate table %s' % (tn1),'yuqerdata')
+        do_sql_order('truncate table %s' % (tn1),db_name1)
         x2.to_sql(tn1,engine,if_exists='append',index=False,chunksize=3000)   #每次都重新更新
         print('交易日数据更新至%s' % x2.tradingdate.max())
     else:
@@ -715,7 +715,7 @@ data_id = 5
 if len(fns_data[data_id])>0:
     tn = 'yq_industry_sw'
     x = pd.read_csv(fns_data[data_id],dtype={'ticker':str})
-    do_sql_order('truncate table %s' % (tn),'yuqerdata')
+    do_sql_order('truncate table %s' % (tn),db_name1)
     x.to_sql(tn,engine,if_exists='append',index=False,chunksize=3000)
     print('行业数据已更新')
     os.remove(fns_data[data_id])
@@ -775,7 +775,7 @@ if len(fns_data[data_id])>0:
             tn1 = 'yuqer_cal'
             x2 = x
             if not x2.empty:
-                do_sql_order('truncate table %s' % (tn1),'yuqerdata')
+                do_sql_order('truncate table %s' % (tn1),db_name1)
                 #x2.rename(columns={'ticker':'symbol'},inplace=True)
                 #为了保持原来table的格式不变
                 x2.to_sql(tn1,engine,if_exists='append',index=False,chunksize=3000)
@@ -1088,7 +1088,7 @@ data_id = 22
 if len(fns_data[data_id])>0:
     tn = 'yq_FutuGet'.lower()
     x = pd.read_csv(fns_data[data_id],dtype={'ticker':str})
-    #do_sql_order('truncate table %s' % (tn),'yuqerdata')
+    do_sql_order('truncate table %s' % (tn),db_name1)
     x.to_sql(tn,engine,if_exists='replace',index=False,chunksize=3000)
     print('期货合约信息')
     os.remove(fns_data[data_id])
@@ -1235,7 +1235,7 @@ if len(fns_data[sub_id])>0:
         try:
             x = pd.read_csv(sub_fn,dtype={'ticker':str})
             tn = 'yq_SecIDGet'.lower()
-            do_sql_order('truncate table %s' % (tn),'yuqerdata')
+            do_sql_order('truncate table %s' % (tn),db_name1)
             x.to_sql(tn,engine,if_exists='append',index=False,chunksize=3000)
             print('证券编码及基本上市信息')
             os.remove(sub_fn) 
@@ -1249,7 +1249,7 @@ if len(fns_data[sub_id])>0:
         try:
             x = pd.read_csv(sub_fn,dtype={'ticker':str})
             tn = 'yq_SecHaltGet'.lower()
-            do_sql_order('truncate table %s' % (tn),'yuqerdata')
+            do_sql_order('truncate table %s' % (tn),db_name1)
             x.to_sql(tn,engine,if_exists='append',index=False,chunksize=3000)
             print('停复牌数据库')
             os.remove(sub_fn) 
@@ -1266,7 +1266,6 @@ if len(fns_data[sub_id])>0:
         try:
             x = pd.read_csv(sub_fn,dtype={'ticker':str})
             tn = 'yq_SecSTGet'.lower()
-            #do_sql_order('truncate table %s' % (tn),'yuqerdata')
             x.to_sql(tn,engine,if_exists='append',index=False,chunksize=3000)
             print('ST标记')
             os.remove(sub_fn) 
@@ -1334,7 +1333,7 @@ if len(fns_data[sub_id])>0:
         try:
             x = pd.read_csv(sub_fn,dtype={'ticker':str})
             tn = 'yq_MdSwBackGet'.lower()
-            do_sql_order('truncate table %s' % (tn),'yuqerdata')
+            do_sql_order('truncate table %s' % (tn),db_name1)
             x.to_sql(tn,engine,if_exists='append',index=False,chunksize=3000)
             print('申万行业回填（含科创板）')
             os.remove(sub_fn)     
@@ -1350,7 +1349,7 @@ if len(fns_data[sub_id])>0:
             x = pd.read_csv(sub_fn,dtype={'ticker':str})
             tn = 'FundGet_S51'.lower()
             if len(x)>0:
-                do_sql_order('truncate table %s' % (tn),'yuqerdata')
+                do_sql_order('truncate table %s' % (tn),db_name1)
                 x.to_sql(tn,engine,if_exists='append',index=False,chunksize=3000)
                 print('基金基本信息已经更新')
             os.remove(sub_fn) 
