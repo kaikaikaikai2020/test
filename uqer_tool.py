@@ -1119,7 +1119,8 @@ if __name__ == '__main__':
     t_20d=datetime.datetime.strftime( datetime.datetime.today()-datetime.timedelta(20),'%Y%m%d')
     t_10d=datetime.datetime.strftime( datetime.datetime.today()-datetime.timedelta(10),'%Y%m%d')
     #table_name = 'yq_MktStockFactorsOneDayProGet'.lower()
-    t0 = get_ini_data('ResConSecIncomeGetS18'.lower(),'repForeTime')
+    #t0 = get_ini_data('ResConSecIncomeGetS18'.lower(),'repForeTime')
+    t0='2020-09-11'
     #t0 = get_ini_data('yq_MktStockFactorsOneDayProGet'.lower(),'tradeDate')
     tref0=get_tradingdate_adair(tt)
     tref0=[i.replace('-','') for i in tref0 if i>=t0]
