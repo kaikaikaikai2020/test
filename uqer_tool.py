@@ -283,6 +283,9 @@ class uq_methods:
             field = """ticker,tradeDate,deliYear,deliMonth,contractObject,preSettlePrice,
                 preOpenInt,openPrice,highestPrice,highestPriceSide,lowestPrice,lowestPriceSide,closePrice,
                 closePriceSide,settlePrice,chg,turnoverVol"""
+                
+            #sub_key = field.replace('\n','').strip().split(',')
+            #sub_key = [i.strip() for i in sub_key]
             x =DataAPI.MktCmeFutdGet(ticker=u"",tradeDate=tt,beginDate=u"",endDate=u"",contractObject=u"",field=field,pandas="1")
             save_data_adair(fn_d2,x,'get_MktCmeFutdGet')
             print('CME期货日行情%s' % fn_d2)
@@ -858,8 +861,11 @@ class uq_methods:
     #组内并行
     def get_finance_data(self,t0,tt,para_sel=True):
         def get_FdmtISGet():
+            info = '合并利润表'
             fn_d1= 'FdmtISGet_%s' % tt
-            info = '合并利润表'                    
+            fn2_d2 = '%s.csv' % fn_d1            
+            if fn2_d2 in list_files():
+                return                    
             x=DataAPI.FdmtISGet(ticker=z1,secID=u"",reportType=u"",endDate=tt,beginDate=t0,publishDateEnd=u"",publishDateBegin=u"",
                       endDateRep="",beginDateRep="",beginYear="",endYear="",fiscalPeriod="",field=u"",pandas="1")
             
@@ -870,7 +876,9 @@ class uq_methods:
         #x=DataAPI.EquRestructuringGet(secID=u"",ticker=u"000040",beginDate=u"20141231",endDate=u"",field=u"",pandas="1")
         def get_EquRestructuringGet():
             fn_d1= 'EquRestructuringGet_%s' % tt
-            fn2_d1 = fn_d1
+            fn2_d2 = '%s.csv' % fn_d1            
+            if fn2_d2  in list_files():
+                return
             info = '资产重组表'
             
             f_str = [u'secID', u'ticker', u'secShortName', u'exchangeCD', u'publishDate',
@@ -882,7 +890,7 @@ class uq_methods:
                u'relationShipDeb', u'institNameCred', u'relationShipCred']
             x=DataAPI.EquRestructuringGet(secID=u"",ticker=z1,beginDate=t0,endDate=tt,field=f_str,pandas="1")
             save_data_adair(fn_d1,x)
-            print('%s已经更新到%s' % (info,fn2_d1))  
+            print('%s已经更新到%s' % (info,fn_d1))  
             
             
         #3 合并资产负债表 (Point in time) 
@@ -897,6 +905,9 @@ class uq_methods:
         #publishDateBegin=u"",endDateRep="",beginDateRep="",beginYear="",endYear="",fiscalPeriod="",field=u"",pandas="1")
         def get_FdmtBSGet():
             fn_d1= 'FdmtBSGet_%s' % tt
+            fn2_d2 = '%s.csv' % fn_d1            
+            if fn2_d2 in list_files():
+                return
             fn2_d1 = fn_d1
             info = '合并资产负债表'
             x=DataAPI.FdmtBSGet(secID=u"",ticker=z1,beginDate=t0,endDate=tt,publishDateBegin=u"",field=u"",pandas="1")
@@ -908,6 +919,9 @@ class uq_methods:
         #DataAPI.FdmtMainOperNGet(partyID="",secID=u"",ticker=u"688001",beginDate=u"20181231",endDate=u"",field=u"",pandas="1")
         def get_FdmtMainOperNGet():
             fn_d1= 'FdmtMainOperNGet_%s' % tt
+            fn2_d2 = '%s.csv' % fn_d1            
+            if fn2_d2 in list_files():
+                return
             fn2_d1 = fn_d1
             info = '主营业务构成'
             x=DataAPI.FdmtMainOperNGet(secID=u"",ticker=z1,beginDate=t0,endDate=tt,field=u"",pandas="1")
@@ -918,6 +932,9 @@ class uq_methods:
         #DataAPI.FdmtEeGet(ticker=u"600000",secID=u"",reportType=u"",endDate=u"",beginDate=u"",publishDateEnd=u"",publishDateBegin=u"",field=u"",pandas="1")
         def get_FdmtEeGet_S26():
             fn_d1= 'FdmtEeGet_S26_%s' % tt
+            fn2_d2 = '%s.csv' % fn_d1            
+            if fn2_d2  in list_files():
+                return
             fn2_d1 = fn_d1
             info = '业绩快报'
             x=DataAPI.FdmtEeGet(secID=u"",ticker=z1,beginDate=t0,endDate=tt,field=u"",pandas="1")
@@ -929,6 +946,9 @@ class uq_methods:
         #nrProfitLoss 非经常性损益 , 直接取公告披露值
         def get_FdmtDerPitGet():
             fn_d1= 'FdmtDerPitGet_%s' % tt
+            fn2_d2 = '%s.csv' % fn_d1            
+            if fn2_d2 in list_files():
+                return
             fn2_d1 = fn_d1
             info = '财务衍生数据 (Point in time)'
             #x=DataAPI.FdmtEeGet(secID=u"",ticker=z1,beginDate=sub_t0,endDate=sub_tt,field=u"",pandas="1")
@@ -941,6 +961,9 @@ class uq_methods:
         #[通联数据] - DataAPI.FdmtIndiTrnovrPitGet
         def get_FdmtIndiTrnovrPitGet():
             fn_d1= 'FdmtIndiTrnovrPitGet_%s' % tt
+            fn2_d2 = '%s.csv' % fn_d1            
+            if fn2_d2 in list_files():
+                return
             fn2_d1 = fn_d1
             info = '财务指标-运营能力'
             x=DataAPI.FdmtIndiTrnovrPitGet(ticker=z1,secID="",endDate=tt,beginDate=t0,
@@ -969,6 +992,9 @@ class uq_methods:
         #DataAPI.FdmtIndiPSPitGet(ticker=u"688002",secID="",endDate="",beginDate="",beginYear=u"",endYear=u"",reportType=u"",publishDateEnd=u"",publishDateBegin=u"",field=u"",pandas="1")
         def get_FdmtIndiPSPitGet():
             fn_d1= 'FdmtIndiPSPitGet_%s' % tt
+            fn2_d2 = '%s.csv' % fn_d1            
+            if fn2_d2 in list_files():
+                return
             fn2_d1 = fn_d1
             info = '财务指标-每股'
             x=DataAPI.FdmtIndiPSPitGet(ticker=z1,secID="",endDate=tt,beginDate=t0,
@@ -981,6 +1007,9 @@ class uq_methods:
         # publishDateEnd=u"",publishDateBegin=u"",endDateRep="",beginDateRep="",beginYear="",endYear="",fiscalPeriod="",field=u"",pandas="1")
         def get_FdmtCFGet():
             fn_d1= 'FdmtCFGet_%s' % tt
+            fn2_d2 = '%s.csv' % fn_d1            
+            if fn2_d2 in list_files():
+                return
             fn2_d1 = fn_d1
             info = '合并现金流量表'
             x=DataAPI.FdmtCFGet(ticker=z1,secID="",endDate=tt,beginDate=t0,
@@ -993,6 +1022,9 @@ class uq_methods:
         #  beginYear=u"",endYear=u"",reportType=u"",publishDateEnd=u"",publishDateBegin=u"",field=u"",pandas="1")
         def get_FdmtIndiRtnPitGet():
             fn_d1= 'FdmtIndiRtnPitGet_%s' % tt
+            fn2_d2 = '%s.csv' % fn_d1            
+            if fn2_d2 in list_files():
+                return
             fn2_d1 = fn_d1
             info = '财务指标—盈利能力'
             x=DataAPI.FdmtIndiRtnPitGet(ticker=z1,secID="",endDate=tt,beginDate=t0,
@@ -1004,6 +1036,9 @@ class uq_methods:
         #10 合并利润表TTM
         def FdmtISTTMPITGet_adair():
             fn_d1= 'FdmtISTTMPITGet_%s' % tt
+            fn2_d2 = '%s.csv' % fn_d1            
+            if fn2_d2 in list_files():
+                return
             fn2_d1 = fn_d1
             info = '合并利润表TTM'
             x=DataAPI.FdmtISTTMPITGet(ticker=z1,secID=u"",endDate=tt,beginDate=t0,publishDateEnd=u"",publishDateBegin=u"",field=u"",pandas="1")        
@@ -1013,6 +1048,9 @@ class uq_methods:
         #11 合并现金流量表（TTM Point in time）
         def FdmtCFTTMPITGet_adair():
             fn_d1= 'FdmtCFTTMPITGet_%s' % tt
+            fn2_d2 = '%s.csv' % fn_d1            
+            if fn2_d2 in list_files():
+                return
             fn2_d1 = fn_d1
             info = '合并现金流量表（TTM Point in time）'
             x=DataAPI.FdmtCFTTMPITGet(ticker=z1,secID=u"",endDate=tt,beginDate=t0,publishDateEnd=u"",publishDateBegin=u"",field=u"",pandas="1")        
@@ -1023,6 +1061,9 @@ class uq_methods:
         #DataAPI.FdmtISQPITGet(ticker=u"688002",secID="",endDate="",beginDate="",beginYear=u"",endYear=u"",reportType=u"",publishDateEnd="",publishDateBegin="",isNew="",isCalc="",field=u"",pandas="1")    
         def FdmtISQPITGet_adair():
             fn_d1= 'FdmtISQPITGet_%s' % tt
+            fn2_d2 = '%s.csv' % fn_d1            
+            if fn2_d2 in list_files():
+                return
             fn2_d1 = fn_d1
             info = '合并利润表TTM'
             x=DataAPI.FdmtISQPITGet(ticker=z1,secID="",endDate=tt,beginDate=t0,beginYear=u"",endYear=u"",reportType=u"",
@@ -1033,6 +1074,9 @@ class uq_methods:
         #14 业绩预告 S49-p1
         def get_FdmtEfGet_S49():
             fn_d1= 'FdmtEfGet_S49_%s' % tt
+            fn2_d2 = '%s.csv' % fn_d1            
+            if fn2_d2 in list_files():
+                return
             fn2_d1 = fn_d1
             info = '业绩快报'
             x=DataAPI.FdmtEfGet(secID=u"",ticker=z1,publishDateBegin=u"",endDate=tt,beginDate=t0,field=u"",pandas="1")
@@ -1042,6 +1086,9 @@ class uq_methods:
         #16 S53更新
         def get_FdmtISQGet():
             fn_d1= 'FdmtISQGetS53_%s' % tt
+            fn2_d2 = '%s.csv' % fn_d1            
+            if fn2_d2 in list_files():
+                return
             fn2_d1 =  fn_d1
             info = '合并利润表（单季度，根据所有会计期末最新披露数据计算）'
             x=DataAPI.FdmtISQGet(ticker=u"",secID=u"",endDate=tt,beginDate=t0,beginYear=u"",endYear=u"",reportType=u"",field=u"",pandas="1")       
@@ -1120,32 +1167,38 @@ if __name__ == '__main__':
     t_10d=datetime.datetime.strftime( datetime.datetime.today()-datetime.timedelta(10),'%Y%m%d')
     #table_name = 'yq_MktStockFactorsOneDayProGet'.lower()
     #t0 = get_ini_data('ResConSecIncomeGetS18'.lower(),'repForeTime')
-    t0='2020-09-11'
-    #t0 = get_ini_data('yq_MktStockFactorsOneDayProGet'.lower(),'tradeDate')
+    #t0='2020-09-11'
+    t0 = get_ini_data('yq_MktStockFactorsOneDayProGet'.lower(),'tradeDate')
     tref0=get_tradingdate_adair(tt)
     tref0=[i.replace('-','') for i in tref0 if i>=t0]
-    #tref_split
-    for sub_t in tref0:
-        uq_m.get_rontie_1d(sub_t,sub_t)
-        
     t0_3d,tt_3d=tref_split(tref0,3)
-    for i in range(len(t0_3d)):
-        uq_m.get_rontie_3d(t0_3d[i],tt_3d[i])
-    
     t0_10d,tt_10d=tref_split(tref0,10)
-    for i in range(len(t0_10d)):
-        uq_m.get_rontie_10d(t0_10d[i],tt_10d[i])
-    
     t0_20d,tt_20d=tref_split(tref0,20)
-    for i in range(len(t0_20d)):
-        uq_m.get_rontie_20d(t0_20d[i],tt_20d[i])
+    tryind=0
+    OK=False
+    while tryind <=10 and not OK:
+        _,fn_exist=get_file_name(datadir,'.csv')
+        print('try run %d ' % tryind)
+        try:
+            #tref_split
+            for sub_t in tref0:
+                uq_m.get_rontie_1d(sub_t,sub_t)                
+            for i in range(len(t0_3d)):
+                uq_m.get_rontie_3d(t0_3d[i],tt_3d[i])            
+            for i in range(len(t0_10d)):
+                uq_m.get_rontie_10d(t0_10d[i],tt_10d[i])            
+            for i in range(len(t0_20d)):
+                uq_m.get_rontie_20d(t0_20d[i],tt_20d[i])                
+            uq_m.get_rontie_halfyear(t_hy,tt)
+            uq_m.get_rontie_year(t_1y,tt)
+            #最近一年
+            uq_m.get_finance_data(t_1y,tt)            
+            uq_m.get_rontie_0(t0,tt)
+            OK=True
+        except:
+            print('Error run %d ' % tryind)
+        tryind=tryind+1
         
-    uq_m.get_rontie_halfyear(t_hy,tt)  
-    
-    uq_m.get_rontie_year(t_1y,tt)
-    #最近一年
-    uq_m.get_finance_data(t_1y,tt)
-    
-    uq_m.get_rontie_0(t0,tt)
-            
-    obj_t.use()    
+    if not OK:
+        print('更新数据失败')
+    obj_t.use()
