@@ -2,6 +2,7 @@
 """
 Created on Sat Sep 26 18:39:02 2020
 S56历史数据临时程序
+20201007 升级港股数据
 @author: adair2019
 """
 import uqer
@@ -92,6 +93,14 @@ def get_tradingdate_adair(tt):
     x=DataAPI.TradeCalGet(exchangeCD=u"XSHG",beginDate=u"20000101",endDate=tt,field=u"calendarDate,isOpen",pandas="1")
     t=x.calendarDate[x.isOpen==1].values
     return t
+
+
+tickerHK0=DataAPI.HKEquGet(secID=u"",ticker=u"",listStatusCD=u"",ListSectorCD=[1,2],equTypeCD=u"",connect=u"",field=u"",pandas="1")
+tickerHK=tickerHK0.ticker.tolist()
+trefHK0=DataAPI.TradeCalGet(exchangeCD=u"XHKG",beginDate=u"19900101",endDate=u"20300101",isOpen=u"",field=u"",pandas="1")
+trefHK = trefHK0[trefHK0.isOpen==1].calendarDate.tolist()
+
+
 
 class uq_methods:
     ####20
@@ -221,6 +230,20 @@ class uq_methods:
                         ticketCode=u"",partyName=u"",beginDate=t0,endDate=tt,field=u"",pandas="1")
             save_data_adair(fn_d1,x)
             print('%s已经更新到%s' % (info,fn_d1))
+        #10 x = DataAPI.MktHKEqudGet(secID=u"",ticker=tickerHK,tradeDate=u"",beginDate=t0,endDate=tt,field=u"",pandas="1")
+        def get_MktHKEqudGet():
+            if tt<'20010102':
+                return
+            info='港股日行情'
+            fn_d1='MktHKEqudGetS54%s' % tt
+            fn2_d2=  '%s.csv' % fn_d1
+            if fn2_d2 in list_files():
+                return
+            
+            x=DataAPI.MktHKEqudGet(secID=u"",ticker=tickerHK,tradeDate=u"",
+                                           beginDate=t0,endDate=tt,field=u"",pandas="1")
+            save_data_adair(fn_d1,x)
+            print('%s已经更新到%s' % (info,fn_d1))
             
         
         def do_update(ind):
@@ -242,12 +265,14 @@ class uq_methods:
                 get_FstDetailGet()
             elif ind==8:
                 get_HKshszHoldGet()
+            elif ind==9:
+                get_MktHKEqudGet()
                 
-        w_n = 8        
+        w_n = 9        
         ind_p=range(w_n+1)   
         if para_sel:
             #多进程
-            pool = ThreadPool(processes=w_n+1)
+            pool = ThreadPool(processes=len(ind_p))
             pool.map(do_update, ind_p)
             pool.close()
             pool.join()
@@ -256,7 +281,8 @@ class uq_methods:
                 do_update(i)
         
     ####5
-    def get_rontie_3d(self,t0,tt,para_sel=True):        
+    def get_rontie_3d(self,t0,tt,para_sel=True):   
+        #1
         def ResConSecDataGet_adair():
             if tt < '2005-01-04':
                 return
@@ -268,7 +294,7 @@ class uq_methods:
             x= DataAPI.ResConSecDataGet(secCode=u"",endDate=tt,beginDate=t0,field="",pandas="1") 
             save_data_adair(fn_d1,x)
             print('%s已经更新到%s' % (info,fn_d1)) 
-        #0-5
+        #2 0-5
         #获取一致预期个股营业收入表
         def ResConSecIncomeGet_adair():
             if tt<'20050104':
@@ -282,7 +308,7 @@ class uq_methods:
             save_data_adair(fn_d1,x)
             print('%s已经更新到%s' % (info,fn_d1)) 
         
-        #基金历史净值(货币型,短期理财债券型除外)
+        #3 基金历史净值(货币型,短期理财债券型除外)
         def get_FundNavGet():
             if tt< '20050104':
                 return
@@ -298,7 +324,7 @@ class uq_methods:
                 save_data_adair(fn_d2,x,'get_FundNavGet')
                 print('%s已经更新到%s' % (info,fn_d2))  
                 return x
-        
+        #4
         def get_MktIdxdGet():
             fn_d2= 'indicator_data%s' % tt
             info = '指数日线'
@@ -329,9 +355,9 @@ class uq_methods:
         else:
             for i in ind_p:
                 do_update(i)
-    
-    ### 1天
-    def get_rontie_1d(self,t0,tt,para_sel=True):
+    #美股等交易日和A股不同的数据源
+    def get_rontie_1d_us(self,t0,tt,para_sel=True):
+        #1
         def get_MktCmeFutdGet():
             if tt< '20160912':
                 return
@@ -347,7 +373,20 @@ class uq_methods:
             x =DataAPI.MktCmeFutdGet(ticker=u"",tradeDate=tt,beginDate=u"",endDate=u"",contractObject=u"",field=field,pandas="1")
             save_data_adair(fn_d2,x,'get_MktCmeFutdGet')
             print('CME期货日行情%s' % fn_d2)
+        #2 sub_x=DataAPI.MktUsequdGet(ticker=u"",tradeDate=sub_t,beginDate=u"",endDate=u"",exchangeCD=u"",field=u"",pandas="1")
+        def get_MktUsequdGet():
+            if tt< '19900101':
+                return
+            fn_d2 = 'MktUsequdGetS54_%s' % tt
+            if '%s.csv' % fn_d2 in list_files():
+                return
             
+            x =DataAPI.MktUsequdGet(ticker=u"",tradeDate=tt,beginDate=u"",endDate=u"",exchangeCD=u"",field=u"",pandas="1")
+            save_data_adair(fn_d2,x,'MktUsequdGetS54')
+            print('美股日行情%s' % fn_d2)
+    ### 1天
+    def get_rontie_1d(self,t0,tt,para_sel=True):        
+        #2    
         def get_FundAssetsGet():
             sub_tt = t0
             fn_d1= 'yq_FundAssetsGet_S51_%s' % sub_tt
@@ -363,6 +402,7 @@ class uq_methods:
             else:
                 print('%s已经存在，%s数据已经更新，未执行' % (fn2_d1,info)) 
                 return None
+        #3
         def get_MktStockFactorsOneDayProGet_full():
             if t0<'20070104':
                 return
@@ -384,6 +424,7 @@ class uq_methods:
             else:
                 print('%s已经存在，未执行' % (fn2_d1)) 
                 return None
+        #4
         def get_MktStockFactorsOneDayGet_full():
             sub_tt=t0
             #sub_t0 = datetime.datetime.strptime(t0_0, '%Y-%m-%d').strftime('%Y-%m-%d')
@@ -403,6 +444,7 @@ class uq_methods:
             else:
                 print('%s已经存在，未执行' % (fn2_d1)) 
                 return None
+        #5
         def get_FundHoldingsGet():
             fn_d2 = 'FundHoldingsGet_S51%s' % tt
             if '%s.csv' % fn_d2 in list_files():
@@ -413,7 +455,7 @@ class uq_methods:
             print('基金持仓明细%s' % fn_d2)
         def do_update(ind):    
             if ind==0:
-                get_MktCmeFutdGet()
+                print('get_MktCmeFutdGet()')
             elif ind==1:
                 get_FundAssetsGet()
             elif ind==2:
@@ -427,7 +469,7 @@ class uq_methods:
         ind_p=range(w_n+1)   
         if para_sel:
             #多进程
-            pool = ThreadPool(processes=w_n+1)
+            pool = ThreadPool(processes=len(ind_p))
             pool.map(do_update, ind_p)
             pool.close()
             pool.join()
@@ -1243,12 +1285,13 @@ if __name__ == '__main__':
     t01 = get_ini_data('yq_MktStockFactorsOneDayProGet'.lower(),'tradeDate')
     t02= get_ini_data('MktCmeFutdGet_S50'.lower(),'tradeDate')
     t0=min(t01,t02)
-    #tref0=get_tradingdate_adair(tt)
-    tref0 = get_all_date(tt)
+    tref0=get_tradingdate_adair(tt)
+    trefHK = get_all_date(tt)
     tref0=[i.replace('-','') for i in tref0 if i>=t0]
+    trefHK=[i.replace('-','') for i in trefHK if i>=t0]
     t0_3d,tt_3d=tref_split(tref0,3)
     t0_10d,tt_10d=tref_split(tref0,10)
-    t0_20d,tt_20d=tref_split(tref0,20)
+    t0_20d,tt_20d=tref_split(trefHK,20)
     tryind=0
     OK=False
     while tryind <=10 and not OK:
@@ -1256,6 +1299,8 @@ if __name__ == '__main__':
         print('try run %d ' % tryind)
         try:
             #tref_split
+            for sub_t in trefHK:
+                uq_m.get_rontie_1d_us(sub_t,sub_t)
             for sub_t in tref0:
                 uq_m.get_rontie_1d(sub_t,sub_t)                
             for i in range(len(t0_3d)):

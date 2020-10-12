@@ -372,6 +372,10 @@ for sub_fn in fns_csv:
         fns_data[71].append(os.path.join(pn,sub_fn))
     elif 'FdmtISQGetS53' in sub_fn:
         fns_data[72].append(os.path.join(pn,sub_fn))
+    elif 'MktHKEqudGetS54' in sub_fn:
+        fns_data[73].append(os.path.join(pn,sub_fn))
+    elif 'MktUsequdGetS54' in sub_fn:
+        fns_data[74].append(os.path.join(pn,sub_fn))
 
 
 data_id = 0
@@ -394,7 +398,7 @@ def get_inidata(tn,key_str='tradeDate'):
     if len(t)>0:
         t = t[t.columns[0]].astype(str).values[0]
     else:
-         t = '1990-01-01'
+         t = '1989-01-01'
     return t
     
 #2 index
@@ -404,7 +408,7 @@ if len(fns_data[data_id])>0:
     tn = 'yq_index'
     key_str = 'tradedate'
     tt_str = get_inidata(tn,key_str)
-    
+    #tt_str='2000-01-01'
     x=[]
     for sub_fn in fns_data[data_id]:
         x.append(pd.read_csv(sub_fn,dtype={'ticker':str}))
@@ -1846,6 +1850,29 @@ if len(fns_data[data_id])>0:
             if not x2.empty:
                 x2.sort_values(by='updateTime',inplace=True)
                 x2.drop_duplicates(subset=['tradeDate','secID'],inplace=True,keep='last')
+                x2.to_sql(tn1,engine,if_exists='append',index=False,chunksize=3000)
+                print('%s更新至%s' % (info,x2.tradeDate.max()))
+            else:
+                print('%s已经是最新的%s，无需更新' % (info,t0))
+            os.remove(sub_fn)
+        except:
+            print(sub_fn)
+            
+data_id=74
+info = '美股日行情'
+if len(fns_data[data_id])>0:
+    tn1 = 'MktUsequdGetS54'.lower()
+    t0 = get_inidata(tn1) 
+    #t0='1990-01-01'
+    for sub_fn in fns_data[data_id]:
+        try:
+            x = pd.read_csv(sub_fn,dtype={'ticker':str})
+            if len(x)==0:
+                continue
+            x2 = x.loc[x.tradeDate>str(t0)]
+            if not x2.empty:
+                #x2.sort_values(by='updateTime',inplace=True)
+                #x2.drop_duplicates(subset=['tradeDate','secID'],inplace=True,keep='last')
                 x2.to_sql(tn1,engine,if_exists='append',index=False,chunksize=3000)
                 print('%s更新至%s' % (info,x2.tradeDate.max()))
             else:
