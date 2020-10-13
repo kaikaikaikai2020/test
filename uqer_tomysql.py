@@ -47,7 +47,10 @@ z_check = True
 tt = time.strftime("%Y%m%d", time.localtime())
 
 #must be set before using
-server_sel = False
+if os.path.exists('localMark.py'):
+    server_sel = False
+else:
+    server_sel = True
 if server_sel:
     from yq_toolsSFZ import pn,user_name,pass_wd,port,host,db_name1
 else:
@@ -1057,7 +1060,7 @@ if len(fns_data[sub_id])>0:
         try:
             x = pd.read_csv(sub_fn,dtype={'ticker':str,'holdingTicker':str})
             tn = 'MktCmeFutdGet_S50'.lower()
-            if len(x)>0:
+            if len(x)>60:
                 t0 = x.tradeDate.astype(str).min()
                 t2 = x.tradeDate.astype(str).max()
                 if z_check:
@@ -1844,10 +1847,10 @@ if len(fns_data[data_id])>0:
     for sub_fn in fns_data[data_id]:
         try:
             x = pd.read_csv(sub_fn,dtype={'ticker':str})
-            if len(x)==0:
+            if len(x)<=60:
                 continue
             x2 = x.loc[x.tradeDate>str(t0)]
-            if not x2.empty:
+            if len(x2)>60:
                 x2.sort_values(by='updateTime',inplace=True)
                 x2.drop_duplicates(subset=['tradeDate','secID'],inplace=True,keep='last')
                 x2.to_sql(tn1,engine,if_exists='append',index=False,chunksize=3000)
@@ -1867,10 +1870,11 @@ if len(fns_data[data_id])>0:
     for sub_fn in fns_data[data_id]:
         try:
             x = pd.read_csv(sub_fn,dtype={'ticker':str})
-            if len(x)==0:
+            if len(x)<=60:
+                os.remove(sub_fn)
                 continue
             x2 = x.loc[x.tradeDate>str(t0)]
-            if not x2.empty:
+            if len(x2)>60:
                 #x2.sort_values(by='updateTime',inplace=True)
                 #x2.drop_duplicates(subset=['tradeDate','secID'],inplace=True,keep='last')
                 x2.to_sql(tn1,engine,if_exists='append',index=False,chunksize=3000)

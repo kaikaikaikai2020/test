@@ -18,8 +18,11 @@ from multiprocessing.dummy import Pool as ThreadPool
 import multiprocessing
 
 
-#from yq_toolsSFZ import engine
-server_sel = False
+if os.path.exists('localMark.py'):
+    server_sel = False
+else:
+    server_sel = True
+    
 if server_sel:
     from yq_toolsSFZ import engine
     from yq_toolsSFZ import pn as datadir
@@ -83,7 +86,7 @@ def get_symbol_adair():
 
 fund_secID = DataAPI.FundGet(secID=u"",ticker=u"",etfLof=u"",listStatusCd=u"",
                         category=['E','H','B','SB','M','O'],idxID=u"",idxTicker=u"",
-                        operationMode=u"",beginDate=u"",endDate=u"",status="",field='secID',pandas="1")
+                        operationMode=u"",field='secID',pandas="1")
 fund_secID=fund_secID.secID.unique().tolist()
 
 
@@ -384,6 +387,23 @@ class uq_methods:
             x =DataAPI.MktUsequdGet(ticker=u"",tradeDate=tt,beginDate=u"",endDate=u"",exchangeCD=u"",field=u"",pandas="1")
             save_data_adair(fn_d2,x,'MktUsequdGetS54')
             print('美股日行情%s' % fn_d2)
+        def do_update(ind):    
+            if ind==0:
+                get_MktCmeFutdGet()
+            elif ind==1:
+                get_MktUsequdGet()
+        w_n = 1        
+        ind_p=range(w_n+1)   
+        if para_sel:
+            #多进程
+            pool = ThreadPool(processes=len(ind_p))
+            pool.map(do_update, ind_p)
+            pool.close()
+            pool.join()
+        else:
+            for i in ind_p:
+                do_update(i)
+            
     ### 1天
     def get_rontie_1d(self,t0,tt,para_sel=True):        
         #2    
