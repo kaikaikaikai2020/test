@@ -509,7 +509,7 @@ class uq_methods:
             elif ind == 5:
                 IdxConsGet_update()
         w_n = 5        
-        ind_p=range(w_n+1)   
+        ind_p=[5]   
         if para_sel:
             #多进程
             pool = ThreadPool(processes=len(ind_p))
@@ -1326,9 +1326,7 @@ if __name__ == '__main__':
     #table_name = 'yq_MktStockFactorsOneDayProGet'.lower()
     #t0 = get_ini_data('ResConSecIncomeGetS18'.lower(),'repForeTime')
     #t0='2020-09-11'
-    t01 = get_ini_data('yq_index'.lower(),'tradeDate')
-    t02= get_ini_data('MktCmeFutdGet_S50'.lower(),'tradeDate')
-    t0=min(t01,t02)
+    t0='2000-01-01'
     tref0,trefHS_M=get_tradingdate_adair(tt)
     trefHK = get_all_date(tt)
     tref0=[i.replace('-','') for i in tref0 if i>=t0.replace('-','')]
@@ -1344,22 +1342,8 @@ if __name__ == '__main__':
         print('try run %d ' % tryind)
         try:
             #tref_split
-            for sub_t in trefHK:
-                uq_m.get_rontie_1d_us(sub_t,sub_t)
             for sub_t in tref0:
-                uq_m.get_rontie_1d(sub_t,sub_t)                
-            for i in range(len(t0_3d)):
-                uq_m.get_rontie_3d(t0_3d[i],tt_3d[i])            
-            for i in range(len(t0_10d)):
-                uq_m.get_rontie_10d(t0_10d[i],tt_10d[i])            
-            for i in range(len(t0_20d)):
-                uq_m.get_rontie_20d(t0_20d[i],tt_20d[i])                
-            uq_m.get_rontie_halfyear(t_hy,tt)
-            uq_m.get_rontie_year(t_1y,tt)
-            #最近一年
-            uq_m.get_finance_data(t_1y,tt)            
-            uq_m.get_rontie_0(t0,tt)
-            OK=True
+                uq_m.get_rontie_1d(sub_t,sub_t,False)                
         except:
             print('Error run %d ' % tryind)
         tryind=tryind+1

@@ -379,6 +379,8 @@ for sub_fn in fns_csv:
         fns_data[73].append(os.path.join(pn,sub_fn))
     elif 'MktUsequdGetS54' in sub_fn:
         fns_data[74].append(os.path.join(pn,sub_fn))
+    elif 'IdxConsGetS57' in sub_fn:
+        fns_data[75].append(os.path.join(pn,sub_fn)) #一次性数据
 
 
 data_id = 0
@@ -1884,3 +1886,19 @@ if len(fns_data[data_id])>0:
             os.remove(sub_fn)
         except:
             print(sub_fn)
+            
+#75 成分股
+data_id = 75
+info = '指数成分构成'
+if len(fns_data[data_id])>0:
+    for sub_fn in fns_data[data_id]:
+        x = pd.read_csv(sub_fn,dtype={'ticker':str,'consTickerSymbol':str,'tradeDate':str})
+        tn1 = 'IdxConsGetS57'.lower()
+        t0 = get_inidata(tn1) 
+        if len(x)>0:
+            x2 = x.loc[x.tradeDate>str(t0).replace('-','')]
+            if len(x2)>0:
+                #do_sql_order('truncate table %s' % (tn1),db_name1)
+                x2.to_sql(tn1,engine,if_exists='append',index=False,chunksize=3000)   #每次都重新更新
+                print('%s已经更新' % info)
+        os.remove(sub_fn)
