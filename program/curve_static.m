@@ -10,7 +10,7 @@ if nargin < 3
 end
 
 if isempty(disp_sel)
-    disp_sel = false;
+    disp_sel = true;
 end
 [m,n] = size(y);
 if eq(m,1)
@@ -110,7 +110,7 @@ v(14) = v(1)/v(8);
 sta_val.ninety_quantile = v(14);
 
 temp = y(2:end)./y(1:end-1)-1;
-temp(eq(temp,0)) = [];
+temp(eq(temp,0)) = []; 
 v_str{15} = 'Ê¤ÂÊ';
 v(15) = sum(temp>0)/length(temp);
 sta_val.ninety_quantile = v(14);
