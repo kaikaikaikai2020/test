@@ -117,7 +117,7 @@ for cut_v =[1.5, 2]
     writetable(rec,fn3);
 end
 
-command = 'git commit --amend';
+command = 'git commit -a -m xxx';
 [status,cmdout] = dos(command)
 command = 'git push https://github.com/kaikaikaikai2020/test.git';
 [status,cmdout] = dos(command)
