@@ -116,3 +116,7 @@ for cut_v =[1.5, 2]
     fn3 = fullfile(pn,sprintf('%s²Ù×÷Ã÷Ï¸-%0.2f.csv',key_str,cut_v));
     writetable(rec,fn3);
 end
+
+command = 'git push';
+[status,cmdout] = dos(command)
+
