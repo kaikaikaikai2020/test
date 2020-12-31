@@ -1,4 +1,5 @@
 %update 20201231 Asia 和 US的收盘价格写到文件里面
+%ntn+1m和irn+1m
 classdef ADR_method
     
     methods(Static)        
@@ -109,9 +110,9 @@ classdef ADR_method
             %y1 = cumprod(1+sum(y,2));
             yc = [cumprod(1+y),cumprod(1+sum(y,2))];
             %具体信息
-            info = [tref,num2cell([boll,H,L,M,pos,x1.data(:,1:2),x2.data(:,1:2)]),oper];
+            info = [tref,num2cell([boll,H,L,M,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos',...
-                'asiaOP','asiaCL','usOP','usCL','operation'});
+                'asiaOP','asiaCL','usOP','usCL','exOP','exCL','operation'});
             
         end
         function  [tref,yc,y,recorder,info] =sig1mod2(x1,x2,x3,sub_fee1,sub_fee2,W0,cut_v,sub_cp)
@@ -244,9 +245,9 @@ classdef ADR_method
             yc = [cumprod(1+y),cumprod(1+sum(y,2))];
 %             info = [tref,num2cell([boll,H,L,M,pos]),oper];
 %             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos','operation'});
-            info = [tref,num2cell([boll,H,L,M,pos,x1.data(:,1:2),x2.data(:,1:2)]),oper];
+            info = [tref,num2cell([boll,H,L,M,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos',...
-                'asiaOP','asiaCL','usOP','usCL','operation'});
+                'asiaOP','asiaCL','usOP','usCL','exOP','exCL','operation'});
             
         end
         
@@ -393,9 +394,9 @@ classdef ADR_method
             %具体信息
 %             info = [tref,num2cell([boll,H,L,M,pos]),oper];
 %             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos','operation'});
-            info = [tref,num2cell([boll,H,L,M,pos,x1.data(:,1:2),x2.data(:,1:2)]),oper];
+            info = [tref,num2cell([boll,H,L,M,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos',...
-                'asiaOP','asiaCL','usOP','usCL','operation'});
+                'asiaOP','asiaCL','usOP','usCL','exOP','exCL','operation'});
         end
         
         function  [tref,yc,y,recorder,info] =sig2mod2(x1,x2,x3,sub_fee1,sub_fee2,W0,cut_v,sub_cp)
@@ -535,9 +536,9 @@ classdef ADR_method
             %具体信息
 %             info = [tref,num2cell([boll,H,L,M,pos]),oper];
 %             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos','operation'});
-            info = [tref,num2cell([boll,H,L,M,pos,x1.data(:,1:2),x2.data(:,1:2)]),oper];
+            info = [tref,num2cell([boll,H,L,M,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos',...
-                            'asiaOP','asiaCL','usOP','usCL','operation'});
+                'asiaOP','asiaCL','usOP','usCL','exOP','exCL','operation'});
             
         end
     end
