@@ -1,3 +1,4 @@
+%update 20201231 Asia 和 US的收盘价格写到文件里面
 classdef ADR_method
     
     methods(Static)        
@@ -45,7 +46,7 @@ classdef ADR_method
                 %开盘统计
                 sub_pos1 = pos(i-1,:);%昨日仓位价格
                 sub_pos2 = [x1.data(i,2),x2.data(i,2)];%今日开盘价格
-                sub_pos3 = x1.data(i,1);%今日亚洲收盘价格
+                sub_pos3 = x1.data(i,1);%今日亚洲收盘价格                
                 sub_recorder = strAdd();
                 if boll(i)>H(i)
                     recorder.A(sprintf(f_str1,tref{i},boll(i),H(i),L(i),'超过上限'));
@@ -108,8 +109,9 @@ classdef ADR_method
             %y1 = cumprod(1+sum(y,2));
             yc = [cumprod(1+y),cumprod(1+sum(y,2))];
             %具体信息
-            info = [tref,num2cell([boll,H,L,M,pos]),oper];
-            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos','operation'});
+            info = [tref,num2cell([boll,H,L,M,pos,x1.data(:,1:2),x2.data(:,1:2)]),oper];
+            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos',...
+                'asiaOP','asiaCL','usOP','usCL','operation'});
             
         end
         function  [tref,yc,y,recorder,info] =sig1mod2(x1,x2,x3,sub_fee1,sub_fee2,W0,cut_v,sub_cp)
@@ -240,8 +242,12 @@ classdef ADR_method
             y = y./2;
             %y1 = cumprod(1+sum(y,2));
             yc = [cumprod(1+y),cumprod(1+sum(y,2))];
-            info = [tref,num2cell([boll,H,L,M,pos]),oper];
-            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos','operation'});
+%             info = [tref,num2cell([boll,H,L,M,pos]),oper];
+%             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos','operation'});
+            info = [tref,num2cell([boll,H,L,M,pos,x1.data(:,1:2),x2.data(:,1:2)]),oper];
+            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos',...
+                'asiaOP','asiaCL','usOP','usCL','operation'});
+            
         end
         
         function  [tref,yc,y,recorder,info] =sig2mod1(x1,x2,x3,sub_fee1,sub_fee2,W0,cut_v,sub_cp)
@@ -385,9 +391,11 @@ classdef ADR_method
             %y1 = cumprod(1+sum(y,2));
             yc = [cumprod(1+y),cumprod(1+sum(y,2))];
             %具体信息
-            info = [tref,num2cell([boll,H,L,M,pos]),oper];
-            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos','operation'});
-            
+%             info = [tref,num2cell([boll,H,L,M,pos]),oper];
+%             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos','operation'});
+            info = [tref,num2cell([boll,H,L,M,pos,x1.data(:,1:2),x2.data(:,1:2)]),oper];
+            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos',...
+                'asiaOP','asiaCL','usOP','usCL','operation'});
         end
         
         function  [tref,yc,y,recorder,info] =sig2mod2(x1,x2,x3,sub_fee1,sub_fee2,W0,cut_v,sub_cp)
@@ -525,8 +533,11 @@ classdef ADR_method
             %y1 = cumprod(1+sum(y,2));
             yc = [cumprod(1+y),cumprod(1+sum(y,2))];
             %具体信息
-            info = [tref,num2cell([boll,H,L,M,pos]),oper];
-            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos','operation'});
+%             info = [tref,num2cell([boll,H,L,M,pos]),oper];
+%             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos','operation'});
+            info = [tref,num2cell([boll,H,L,M,pos,x1.data(:,1:2),x2.data(:,1:2)]),oper];
+            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos',...
+                            'asiaOP','asiaCL','usOP','usCL','operation'});
             
         end
     end
