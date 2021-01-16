@@ -35,7 +35,11 @@ classdef ADR_method_reverse
             S = movstd(boll,W);
             L = M-S*cut_v;
             H = M+S*cut_v;
-
+            
+            HP=zeros(size(H));
+            LP=zeros(size(L));
+            HP(2:end) = (H(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
+            LP(2:end) = (L(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
             T2 =length(boll);
             pos=zeros(T2,2);
             %亚洲买入,美国买入
@@ -112,8 +116,8 @@ classdef ADR_method_reverse
             %y1 = cumprod(1+sum(y,2));
             yc = [cumprod(1+y),cumprod(1+sum(y,2))];
             %具体信息
-            info = [tref,num2cell([boll,H,L,M,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
-            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','USPos','asiaPos',...
+            info = [tref,num2cell([boll,H,L,M,HP,LP,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
+            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','Hbond_price','Lbond_price','USPos','asiaPos',...
                 'USOP','USCL','asiaOP','asiaCL','r_exOP','r_exCL','operation'});
             
         end
@@ -147,7 +151,12 @@ classdef ADR_method_reverse
             S = movstd(boll,W);
             L = M-S*cut_v;
             H = M+S*cut_v;
-
+            
+            HP=zeros(size(H));
+            LP=zeros(size(L));
+            HP(2:end) = (H(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
+            LP(2:end) = (L(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
+            
             T2 =length(boll);
             pos=zeros(T2,2);
             %亚洲买入,美国买入
@@ -248,8 +257,8 @@ classdef ADR_method_reverse
             yc = [cumprod(1+y),cumprod(1+sum(y,2))];
 %             info = [tref,num2cell([boll,H,L,M,pos]),oper];
 %             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos','operation'});
-            info = [tref,num2cell([boll,H,L,M,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
-            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','USPos','asiaPos',...
+            info = [tref,num2cell([boll,H,L,M,HP,LP,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
+            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','Hbond_price','Lbond_price','USPos','asiaPos',...
                 'USOP','USCL','asiaOP','asiaCL','r_exOP','r_exCL','operation'});
             
         end
@@ -284,7 +293,12 @@ classdef ADR_method_reverse
             S = movstd(boll,W);
             L = M-S*cut_v;
             H = M+S*cut_v;
-
+            
+            HP=zeros(size(H));
+            LP=zeros(size(L));
+            HP(2:end) = (H(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
+            LP(2:end) = (L(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
+            
             T2 =length(boll);
             pos=zeros(T2,2);
             %亚洲买入,美国买入
@@ -398,8 +412,8 @@ classdef ADR_method_reverse
             %具体信息
 %             info = [tref,num2cell([boll,H,L,M,pos]),oper];
 %             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos','operation'});
-            info = [tref,num2cell([boll,H,L,M,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
-            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','USPos','asiaPos',...
+            info = [tref,num2cell([boll,H,L,M,HP,LP,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
+            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','Hbond_price','Lbond_price','USPos','asiaPos',...
                 'USOP','USCL','asiaOP','asiaCL','r_exOP','r_exCL','operation'});
         end
         
@@ -433,7 +447,11 @@ classdef ADR_method_reverse
             S = movstd(boll,W);
             L = M-S*cut_v;
             H = M+S*cut_v;
-
+            
+            HP=zeros(size(H));
+            LP=zeros(size(L));
+            HP(2:end) = (H(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
+            LP(2:end) = (L(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
             T2 =length(boll);
             pos=zeros(T2,2);
             %亚洲买入,美国买入
@@ -541,8 +559,8 @@ classdef ADR_method_reverse
             %具体信息
 %             info = [tref,num2cell([boll,H,L,M,pos]),oper];
 %             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos','operation'});
-            info = [tref,num2cell([boll,H,L,M,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
-            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','USPos','asiaPos',...
+            info = [tref,num2cell([boll,H,L,M,HP,LP,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
+            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','Hbond_price','Lbond_price','USPos','asiaPos',...
                 'USOP','USCL','asiaOP','asiaCL','r_exOP','r_exCL','operation'});
             
         end

@@ -109,9 +109,13 @@ classdef ADR_method
             y = y./2;
             %y1 = cumprod(1+sum(y,2));
             yc = [cumprod(1+y),cumprod(1+sum(y,2))];
+            HP=zeros(size(H));
+            LP=zeros(size(L));
+            HP(2:end) = (H(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
+            LP(2:end) = (L(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
             %具体信息
-            info = [tref,num2cell([boll,H,L,M,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
-            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos',...
+            info = [tref,num2cell([boll,H,L,M,HP,LP,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
+            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','Hbond_price','Lbond_price','asiaPos','usPos',...
                 'asiaOP','asiaCL','usOP','usCL','exOP','exCL','operation'});
             
         end
@@ -245,8 +249,13 @@ classdef ADR_method
             yc = [cumprod(1+y),cumprod(1+sum(y,2))];
 %             info = [tref,num2cell([boll,H,L,M,pos]),oper];
 %             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos','operation'});
-            info = [tref,num2cell([boll,H,L,M,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
-            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos',...
+            HP=zeros(size(H));
+            LP=zeros(size(L));
+            HP(2:end) = (H(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
+            LP(2:end) = (L(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
+            %具体信息
+            info = [tref,num2cell([boll,H,L,M,HP,LP,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
+            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','Hbond_price','Lbond_price','asiaPos','usPos',...
                 'asiaOP','asiaCL','usOP','usCL','exOP','exCL','operation'});
             
         end
@@ -394,8 +403,13 @@ classdef ADR_method
             %具体信息
 %             info = [tref,num2cell([boll,H,L,M,pos]),oper];
 %             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos','operation'});
-            info = [tref,num2cell([boll,H,L,M,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
-            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos',...
+            HP=zeros(size(H));
+            LP=zeros(size(L));
+            HP(2:end) = (H(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
+            LP(2:end) = (L(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
+            %具体信息
+            info = [tref,num2cell([boll,H,L,M,HP,LP,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
+            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','Hbond_price','Lbond_price','asiaPos','usPos',...
                 'asiaOP','asiaCL','usOP','usCL','exOP','exCL','operation'});
         end
         
@@ -536,8 +550,13 @@ classdef ADR_method
             %具体信息
 %             info = [tref,num2cell([boll,H,L,M,pos]),oper];
 %             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos','operation'});
-            info = [tref,num2cell([boll,H,L,M,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
-            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos',...
+            HP=zeros(size(H));
+            LP=zeros(size(L));
+            HP(2:end) = (H(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
+            LP(2:end) = (L(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
+            %具体信息
+            info = [tref,num2cell([boll,H,L,M,HP,LP,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
+            info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','Hbond_price','Lbond_price','asiaPos','usPos',...
                 'asiaOP','asiaCL','usOP','usCL','exOP','exCL','operation'});
             
         end
