@@ -38,8 +38,8 @@ classdef ADR_method_reverse
             
             HP=zeros(size(H));
             LP=zeros(size(L));
-            HP(2:end) = (H(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
-            LP(2:end) = (L(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
+            HP(2:end) = close_us(1:end-1).*p(2:end)./sub_cp./(H(2:end)+1);
+            LP(2:end) = close_us(1:end-1).*p(2:end)./sub_cp./(L(2:end)+1);
             T2 =length(boll);
             pos=zeros(T2,2);
             %亚洲买入,美国买入
@@ -154,8 +154,8 @@ classdef ADR_method_reverse
             
             HP=zeros(size(H));
             LP=zeros(size(L));
-            HP(2:end) = (H(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
-            LP(2:end) = (L(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
+            HP(2:end) = close_us(1:end-1).*p(2:end)./sub_cp./(H(2:end)+1);
+            LP(2:end) = close_us(1:end-1).*p(2:end)./sub_cp./(L(2:end)+1);
             
             T2 =length(boll);
             pos=zeros(T2,2);
@@ -296,8 +296,8 @@ classdef ADR_method_reverse
             
             HP=zeros(size(H));
             LP=zeros(size(L));
-            HP(2:end) = (H(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
-            LP(2:end) = (L(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
+            HP(2:end) = close_us(1:end-1).*p(2:end)./sub_cp./(H(2:end)+1);
+            LP(2:end) = close_us(1:end-1).*p(2:end)./sub_cp./(L(2:end)+1);
             
             T2 =length(boll);
             pos=zeros(T2,2);
@@ -450,8 +450,8 @@ classdef ADR_method_reverse
             
             HP=zeros(size(H));
             LP=zeros(size(L));
-            HP(2:end) = (H(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
-            LP(2:end) = (L(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
+            HP(2:end) = close_us(1:end-1).*p(2:end)./sub_cp./(H(2:end)+1);
+            LP(2:end) = close_us(1:end-1).*p(2:end)./sub_cp./(L(2:end)+1);
             T2 =length(boll);
             pos=zeros(T2,2);
             %亚洲买入,美国买入

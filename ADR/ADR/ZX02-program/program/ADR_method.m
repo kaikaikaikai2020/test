@@ -111,8 +111,8 @@ classdef ADR_method
             yc = [cumprod(1+y),cumprod(1+sum(y,2))];
             HP=zeros(size(H));
             LP=zeros(size(L));
-            HP(2:end) = (H(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
-            LP(2:end) = (L(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
+            HP(2:end) = close_us(1:end-1).*p(2:end)./sub_cp./(H(2:end)+1);
+            LP(2:end) = close_us(1:end-1).*p(2:end)./sub_cp./(L(2:end)+1);
             %具体信息
             info = [tref,num2cell([boll,H,L,M,HP,LP,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','Hbond_price','Lbond_price','asiaPos','usPos',...
@@ -251,8 +251,8 @@ classdef ADR_method
 %             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos','operation'});
             HP=zeros(size(H));
             LP=zeros(size(L));
-            HP(2:end) = (H(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
-            LP(2:end) = (L(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
+            HP(2:end) = close_us(1:end-1).*p(2:end)./sub_cp./(H(2:end)+1);
+            LP(2:end) = close_us(1:end-1).*p(2:end)./sub_cp./(L(2:end)+1);
             %具体信息
             info = [tref,num2cell([boll,H,L,M,HP,LP,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','Hbond_price','Lbond_price','asiaPos','usPos',...
@@ -405,8 +405,8 @@ classdef ADR_method
 %             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos','operation'});
             HP=zeros(size(H));
             LP=zeros(size(L));
-            HP(2:end) = (H(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
-            LP(2:end) = (L(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
+            HP(2:end) = close_us(1:end-1).*p(2:end)./sub_cp./(H(2:end)+1);
+            LP(2:end) = close_us(1:end-1).*p(2:end)./sub_cp./(L(2:end)+1);
             %具体信息
             info = [tref,num2cell([boll,H,L,M,HP,LP,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','Hbond_price','Lbond_price','asiaPos','usPos',...
@@ -552,8 +552,8 @@ classdef ADR_method
 %             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','asiaPos','usPos','operation'});
             HP=zeros(size(H));
             LP=zeros(size(L));
-            HP(2:end) = (H(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
-            LP(2:end) = (L(2:end)+1).*sub_cp.*open_asia(2:end)./p(2:end);
+            HP(2:end) = close_us(1:end-1).*p(2:end)./sub_cp./(H(2:end)+1);
+            LP(2:end) = close_us(1:end-1).*p(2:end)./sub_cp./(L(2:end)+1);
             %具体信息
             info = [tref,num2cell([boll,H,L,M,HP,LP,pos,x1.data(:,1:2),x2.data(:,1:2),x3.data(:,1:2)]),oper];
             info = cell2table(info,'VariableNames',{'date','premium','HighBond','LowBond','meanLine','Hbond_price','Lbond_price','asiaPos','usPos',...
